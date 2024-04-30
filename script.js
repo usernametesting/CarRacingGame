@@ -1,3 +1,4 @@
+var needle = 130;
 let intervalId, pipeSpeed, tempSpeed = 1;
 
 // styling pipes
@@ -33,22 +34,16 @@ function movePipes() {
 
 
 // move bird
-function moveBird() {
-    document.getElementById('flyBtn').style.bottom = isNaN(document.getElementById('flyBtn').style.bottom) ? "0px"
-        : (document.getElementById('flyBtn').style.bottom - 0.1) + "px";
-    // document.getElementById('airPlane').style.transform = "rotate(45deg)";
-    // if (isNaN(parseInt(document.getElementById('flyBtn').style.bottom)))
-    // document.getElementById('airPlane').style.transform = "rotate(0deg)";
-
-    // clearInterval(intervalId);
-
+function speedControl() {
+    document.getElementById("lb").style.transform =`rotate(${needle-=0.05}deg)`;
+    tempSpeed -= 1;
 };
 
 
 // starting moving
 window.onload = function () {
     intervalId = setInterval(movePipes, 0);
-    // setInterval(moveBird, 700);
+    setInterval(speedControl, 0);
 };
 
 
@@ -91,6 +86,7 @@ document.addEventListener('keydown', function (event) {
     //     document.getElementById('airPlane').style.transform = "rotate(360deg)";
 
     if (event.key === "ArrowLeft") {
+        document.getElementById("lb").style.transform =`rotate(${needle-=5}deg)`;
         tempSpeed -= 1;
         sound = document.getElementById("brakeSound");
         sound.play();
@@ -100,9 +96,16 @@ document.addEventListener('keydown', function (event) {
 
     if (event.key === "ArrowRight") {
         sound = document.getElementById("crashSound");
-        tempSpeed += 1;
+        tempSpeed += 5;
         sound.play();
-        lastClickedTime = currentTime;
+        // let needle = parseFloat(getComputedStyle(document.getElementById("lb")).transform.split("(")[1].split(")")[0].split(",")[1]);
+        // console.log("needle: "+needle);
+
+
+        document.getElementById("lb").style.transform =`rotate(${needle+=1}deg)`;
+        // lastClickedTime = currentTime;
     }
 
 });
+
+
